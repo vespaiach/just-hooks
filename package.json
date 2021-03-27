@@ -1,6 +1,11 @@
 {
   "version": "0.1.0",
+  "keywords": [
+    "react",
+    "hooks"
+  ],
   "license": "MIT",
+  "description": "Collection of useful React Hooks",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -26,6 +31,13 @@
     "hooks": {
       "pre-commit": "tsdx lint"
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vespaiach/just-hooks"
+  },
+  "bugs": {
+    "url": "https://github.com/vespaiach/just-hooks/issues"
   },
   "prettier": {
     "printWidth": 80,

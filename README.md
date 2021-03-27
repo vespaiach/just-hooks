@@ -1,3 +1,10 @@
+[![MIT license][license-image]][npm-url] [![Issue][issue-image]][issue-url]
+
+[license-image]: https://img.shields.io/github/license/vespaiach/just-hooks
+[npm-url]: https://www.npmjs.com/package/just-hooks
+[issue-image]: https://img.shields.io/github/issues/vespaiach/just-hooks
+[issue-url]: https://github.com/vespaiach/just-hooks/issues
+
 # just-hooks
 
 Just a collection of useful React Hooks.
