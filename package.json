@@ -18,6 +18,8 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
+    "prepublish": "yarn build",
+    "publish": "npm publish",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
