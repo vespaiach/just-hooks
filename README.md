@@ -17,6 +17,6 @@ const {
 
 - start: start list (can be list of number, string or object that has an id key)
 - end: end list (can be list of number, string or object that has an id key)
-- add: add() function will move item from start to end
-- remove: remove() function will move item back from end to start
-- equalityCompareFn: is optional. This function will compare item in list with item being added or removed to see if they are matched
+- add: add() function will move item from `start` to `end`
+- remove: remove() function will move item back from `end` to `start`
+- equalityCompareFn: is optional function which is used to compare items in list with items being added or removed to see if they are matched. Default is `===`.

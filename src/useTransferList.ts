@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 const defaultEqualityCompare: (item: any, addOrRemoveItem: any) => boolean = (
   item,
@@ -45,27 +45,21 @@ export default function useTransferList<
   const [start, setStart] = useState<T[]>(initialList);
   const [end, setEnd] = useState<T[]>([]);
 
-  const add = useCallback(
-    (item: T) => {
-      const index = start.findIndex(it => equalityCompareFn(it, item));
-      if (index > -1) {
-        setStart(start.filter(it => !equalityCompareFn(item, it)));
-        setEnd([...end, item]);
-      }
-    },
-    [setStart, setEnd, start, end]
-  );
+  const add = (item: T) => {
+    const index = start.findIndex(it => equalityCompareFn(it, item));
+    if (index > -1) {
+      setStart(start.filter(it => !equalityCompareFn(item, it)));
+      setEnd([...end, item]);
+    }
+  };
 
-  const remove = useCallback(
-    (item: T) => {
-      const index = end.findIndex(it => equalityCompareFn(it, item));
-      if (index > -1) {
-        setStart([...start, item]);
-        setEnd(end.filter(it => !equalityCompareFn(item, it)));
-      }
-    },
-    [setStart, setEnd, start, end]
-  );
+  const remove = (item: T) => {
+    const index = end.findIndex(it => equalityCompareFn(it, item));
+    if (index > -1) {
+      setStart([...start, item]);
+      setEnd(end.filter(it => !equalityCompareFn(item, it)));
+    }
+  };
 
   return {
     start,

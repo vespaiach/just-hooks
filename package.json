@@ -20,7 +20,7 @@
     "analyze": "size-limit --why"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "react": ">=16.8"
   },
   "husky": {
     "hooks": {
@@ -34,7 +34,7 @@
     "trailingComma": "es5"
   },
   "name": "just-hooks",
-  "author": "vespaiach",
+  "author": "vespaiach; nta.toan@gmail.com",
   "module": "dist/just-hooks.esm.js",
   "size-limit": [
     {
