@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const defaultEqualityCompare: (item: any, addOrRemoveItem: any) => boolean = (
+const equalityCompare: (item: any, addOrRemoveItem: any) => boolean = (
   item,
   addOrRemoveItem
 ) => {
@@ -23,48 +23,44 @@ export interface KeyedObject {
 
 /**
  *
- * @param initialList list of initial items. Item's type can be number, string or object that has an `id` field
- * @param equalityCompareFn (optional) comparing function filter out items that are removed from lists. Return true will keep items or false to remove them
+ * @param initialStartList list of initial start items. Item's type can be number, string or object that has an `id` field
+ * @param initialEndList (optional) list of initial end items. Item's type can be number, string or object that has an `id` field
  * @returns
  * {
- *   start: list of initial items,
- *   end: list of items that have been transfered to,
- *   add(): transfer item to end list,
- *   remove(): transfer item back to start list
+ *   startList: list of initial items,
+ *   endList: list of items that have been transfered to,
+ *   transfer(): transfer item to end list,
+ *   withdraw(): withdraw item back to start list
  * }
  */
 export default function useTransferList<
   T extends number | string | KeyedObject
->(
-  initialList: T[],
-  equalityCompareFn: (
-    item: T,
-    addOrRemoveItem: T
-  ) => boolean = defaultEqualityCompare
-) {
-  const [start, setStart] = useState<T[]>(initialList);
-  const [end, setEnd] = useState<T[]>([]);
+>(initialStartList: T[], initialEndList?: T[]) {
+  const [startList, setStartList] = useState<T[]>(initialStartList);
+  const [endList, setEndList] = useState<T[]>(initialEndList || []);
 
-  const add = (item: T) => {
-    const index = start.findIndex(it => equalityCompareFn(it, item));
+  const transfer = (item: T) => {
+    const index = startList.findIndex(it => equalityCompare(it, item));
     if (index > -1) {
-      setStart(start.filter(it => !equalityCompareFn(item, it)));
-      setEnd([...end, item]);
+      const items = startList.splice(index, 1);
+      setEndList([...endList, ...items]);
+      setStartList(startList);
     }
   };
 
-  const remove = (item: T) => {
-    const index = end.findIndex(it => equalityCompareFn(it, item));
+  const withdraw = (item: T) => {
+    const index = endList.findIndex(it => equalityCompare(it, item));
     if (index > -1) {
-      setStart([...start, item]);
-      setEnd(end.filter(it => !equalityCompareFn(item, it)));
+      const items = endList.splice(index, 1);
+      setStartList([...startList, ...items]);
+      setEndList(endList);
     }
   };
 
   return {
-    start,
-    end,
-    add,
-    remove,
+    startList,
+    endList,
+    transfer,
+    withdraw,
   };
 }

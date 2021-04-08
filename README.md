@@ -1,7 +1,5 @@
-[![MIT license][license-image]][npm-url] [![Issue][issue-image]][issue-url]
+[![Issue][issue-image]][issue-url]
 
-[license-image]: https://img.shields.io/github/license/vespaiach/just-hooks
-[npm-url]: https://www.npmjs.com/package/just-hooks
 [issue-image]: https://img.shields.io/github/issues/vespaiach/just-hooks
 [issue-url]: https://github.com/vespaiach/just-hooks/issues
 
@@ -9,21 +7,32 @@
 
 Just a collection of useful React Hooks.
 
+# Usage
+
+```
+npm install just-hooks --save
+yarn add just-hooks -S
+
+import { useTransferList } from 'just-hooks';
+```
+
+# Hooks
+
 ## Transfering List
 
-Given two lists `start` and `end` and we want to transfer their items back and forth.
+Given two lists `startList` and `endList`, we want to transfer their items back and forth.
 
 ```
 const {
-  start,
-  end,
-  add,
-  remove
-} = useTransferList(initialList, equalityCompareFn)
+  startList,
+  endList,
+  transfer,
+  withdraw
+} = useTransferList(initialStartList, [initialEndList])
 ```
 
-- start: start list (can be list of number, string or object that has an id key)
-- end: end list (can be list of number, string or object that has an id key)
-- add: add() function will move item from `start` to `end`
-- remove: remove() function will move item back from `end` to `start`
-- equalityCompareFn: is optional function which is used to compare items in list with items being added or removed to see if they are matched. Default is `===`.
+- startList: start list (can be list of number, string or object that has an id key)
+- endList: end list (can be list of number, string or object that has an id key)
+- transfer: transfer() function will move item from `startList` to `endList`
+- withdraw: withdraw() function will move item back from `endList` to `startList`
+- [initialEndList]: is optional.

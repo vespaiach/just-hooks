@@ -4,7 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var react = require('react');
 
-var defaultEqualityCompare = function defaultEqualityCompare(item, addOrRemoveItem) {
+var equalityCompare = function equalityCompare(item, addOrRemoveItem) {
   var typeofItem = typeof item;
   var typeofAddOrRemoveItem = typeof addOrRemoveItem;
 
@@ -16,62 +16,56 @@ var defaultEqualityCompare = function defaultEqualityCompare(item, addOrRemoveIt
 };
 /**
  *
- * @param initialList list of initial items. Item's type can be number, string or object that has an `id` field
- * @param equalityCompareFn (optional) comparing function filter out items that are removed from lists. Return true will keep items or false to remove them
+ * @param initialStartList list of initial start items. Item's type can be number, string or object that has an `id` field
+ * @param initialEndList (optional) list of initial end items. Item's type can be number, string or object that has an `id` field
  * @returns
  * {
- *   start: list of initial items,
- *   end: list of items that have been transfered to,
- *   add(): transfer item to end list,
- *   remove(): transfer item back to start list
+ *   startList: list of initial items,
+ *   endList: list of items that have been transfered to,
+ *   transfer(): transfer item to end list,
+ *   withdraw(): withdraw item back to start list
  * }
  */
 
 
-function useTransferList(initialList, equalityCompareFn) {
-  if (equalityCompareFn === void 0) {
-    equalityCompareFn = defaultEqualityCompare;
-  }
+function useTransferList(initialStartList, initialEndList) {
+  var _useState = react.useState(initialStartList),
+      startList = _useState[0],
+      setStartList = _useState[1];
 
-  var _useState = react.useState(initialList),
-      start = _useState[0],
-      setStart = _useState[1];
+  var _useState2 = react.useState(initialEndList || []),
+      endList = _useState2[0],
+      setEndList = _useState2[1];
 
-  var _useState2 = react.useState([]),
-      end = _useState2[0],
-      setEnd = _useState2[1];
-
-  var add = function add(item) {
-    var index = start.findIndex(function (it) {
-      return equalityCompareFn(it, item);
+  var transfer = function transfer(item) {
+    var index = startList.findIndex(function (it) {
+      return equalityCompare(it, item);
     });
 
     if (index > -1) {
-      setStart(start.filter(function (it) {
-        return !equalityCompareFn(item, it);
-      }));
-      setEnd([].concat(end, [item]));
+      var items = startList.splice(index, 1);
+      setEndList([].concat(endList, items));
+      setStartList(startList);
     }
   };
 
-  var remove = function remove(item) {
-    var index = end.findIndex(function (it) {
-      return equalityCompareFn(it, item);
+  var withdraw = function withdraw(item) {
+    var index = endList.findIndex(function (it) {
+      return equalityCompare(it, item);
     });
 
     if (index > -1) {
-      setStart([].concat(start, [item]));
-      setEnd(end.filter(function (it) {
-        return !equalityCompareFn(item, it);
-      }));
+      var items = endList.splice(index, 1);
+      setStartList([].concat(startList, items));
+      setEndList(endList);
     }
   };
 
   return {
-    start: start,
-    end: end,
-    add: add,
-    remove: remove
+    startList: startList,
+    endList: endList,
+    transfer: transfer,
+    withdraw: withdraw
   };
 }
 

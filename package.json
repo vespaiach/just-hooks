@@ -1,10 +1,10 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "keywords": [
     "react",
     "hooks"
   ],
-  "license": "MIT",
+  "license": "Unlicense",
   "description": "Collection of useful React Hooks",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

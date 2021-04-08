@@ -3,19 +3,19 @@ export interface KeyedObject {
 }
 /**
  *
- * @param initialList list of initial items. Item's type can be number, string or object that has an `id` field
- * @param equalityCompareFn (optional) comparing function filter out items that are removed from lists. Return true will keep items or false to remove them
+ * @param initialStartList list of initial start items. Item's type can be number, string or object that has an `id` field
+ * @param initialEndList (optional) list of initial end items. Item's type can be number, string or object that has an `id` field
  * @returns
  * {
- *   start: list of initial items,
- *   end: list of items that have been transfered to,
- *   add(): transfer item to end list,
- *   remove(): transfer item back to start list
+ *   startList: list of initial items,
+ *   endList: list of items that have been transfered to,
+ *   transfer(): transfer item to end list,
+ *   withdraw(): withdraw item back to start list
  * }
  */
-export default function useTransferList<T extends number | string | KeyedObject>(initialList: T[], equalityCompareFn?: (item: T, addOrRemoveItem: T) => boolean): {
-    start: T[];
-    end: T[];
-    add: (item: T) => void;
-    remove: (item: T) => void;
+export default function useTransferList<T extends number | string | KeyedObject>(initialStartList: T[], initialEndList?: T[]): {
+    startList: T[];
+    endList: T[];
+    transfer: (item: T) => void;
+    withdraw: (item: T) => void;
 };
