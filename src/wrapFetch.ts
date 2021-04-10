@@ -1,22 +1,18 @@
 export class APIError<T> extends Error {
   public data: T | undefined;
-  private code: number | undefined;
+  private code: string | undefined;
 
-  constructor(message: string, code?: number, data?: T) {
+  constructor(message: string, code?: string, data?: T) {
     super(message);
 
-    this.code = code;
+    this.code = code || 'Unknown';
     this.data = data;
   }
 
   public toString() {
-    if (this.code) {
-      return `[${this.code}] ${this.message}`;
-    }
-    return super.toString();
+    return `[${this.code}] ${this.message}`;
   }
 }
-
 const getResponseType = (contentType: string) => {
   if (
     contentType.indexOf('application/json') > -1 ||
@@ -73,7 +69,11 @@ export async function safeFetch<T = unknown>(
       try {
         data = (await response[responseType]()) as T;
         if (!response.ok) {
-          data = new APIError(response.statusText, response.status, data);
+          data = new APIError(
+            response.statusText,
+            String(response.status),
+            data
+          );
         }
       } catch (error) {
         ok = false;

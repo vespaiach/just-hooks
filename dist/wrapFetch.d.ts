@@ -1,7 +1,7 @@
 export declare class APIError<T> extends Error {
     data: T | undefined;
     private code;
-    constructor(message: string, code?: number, data?: T);
+    constructor(message: string, code?: string, data?: T);
     toString(): string;
 }
 export declare type APIResponse<T = unknown> = {
