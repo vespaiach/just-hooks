@@ -1,5 +1,8 @@
+/**
+ * @jest-environment jsdom
+ */
 import { renderHook, act } from '@testing-library/react-hooks';
-import useTransferList from '../src/useTransferList';
+import useTransferList from './useTransferList';
 
 test('should work normally with empty list', () => {
   const { result } = renderHook(() => useTransferList<number>([]));
