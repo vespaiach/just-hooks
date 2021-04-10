@@ -5,7 +5,7 @@
 
 # just-hooks
 
-Just a collection of useful React Hooks.
+A collection of useful React Hooks and utility functions help to speed up web development.
 
 # Usage
 
@@ -13,14 +13,14 @@ Just a collection of useful React Hooks.
 npm install just-hooks --save
 yarn add just-hooks -S
 
-import { useTransferList } from 'just-hooks';
+import { useTransferList, safeFetch } from 'just-hooks';
 ```
 
-# Hooks
+# List of just-hooks
 
 ## Transfering List
 
-Given two lists `startList` and `endList`, we want to transfer their items back and forth.
+Given two lists `startList` and `endList`, this hook will help to their items back and forth.
 
 ```
 const {
@@ -36,3 +36,43 @@ const {
 - transfer: transfer() function will move item from `startList` to `endList`
 - withdraw: withdraw() function will move item back from `endList` to `startList`
 - [initialEndList]: is optional.
+
+## Wrap Fetch Function
+
+A utility function help to combine fetch's two-stage calls into one call and make sure all exceptions are catched. Response of this function will give either `data` or `error`:
+```
+import { useTransferList, safeFetch } from 'just-hooks';
+const response = await safeFetch('url/api');
+
+// success
+{
+  ok: true,
+  data: 'response data', // <- response from server
+  origin: Response // <- response instance of fetch request
+}
+
+// fail
+{
+  ok: false,
+  error: 'response data', // <- response from server
+  origin: Response // <- response instance of fetch request
+}
+```
+
+The response's error is an instance of APIError:
+
+```
+if (!response.ok) {
+  /**
+   * Instance of APIError has three members:
+   *   - `message`: error message
+   *   - `code`: Http status, some unexpected error will give `unknown` code
+   *   - `data`: error data that server has returned
+   */
+  response.error  
+}
+```
+
+# Support Browsers List
+
+[defaults, not IE 11](https://browserslist.dev/?q=ZGVmYXVsdHMsIG5vdCBJRSAxMQ%3D%3D)
