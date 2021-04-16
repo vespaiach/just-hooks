@@ -26,7 +26,7 @@ test('should return when HTTP status 400', async () => {
 
   expect(apiResult.ok).toBe(false);
   expect(apiResult.data).toBe(undefined);
-  expect(apiResult.error.code).toBe(400);
+  expect(apiResult.error.code).toBe('400');
   expect(apiResult.error.data).toEqual({
     name: 'something wrong with name field',
   });
@@ -39,7 +39,7 @@ test('should return when HTTP status 401', async () => {
 
   expect(apiResult.ok).toBe(false);
   expect(apiResult.data).toBe(undefined);
-  expect(apiResult.error.code).toBe(401);
+  expect(apiResult.error.code).toBe('401');
 });
 
 test('should return when HTTP status 500', async () => {
@@ -49,7 +49,7 @@ test('should return when HTTP status 500', async () => {
 
   expect(apiResult.ok).toBe(false);
   expect(apiResult.data).toBe(undefined);
-  expect(apiResult.error.code).toBe(500);
+  expect(apiResult.error.code).toBe('500');
 });
 
 test('should return when there is an unexpected error from server', async () => {
