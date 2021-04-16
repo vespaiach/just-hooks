@@ -104,7 +104,7 @@ function useLocalStorage(keyOrFn, initialValue, options) {
     } catch (err) {
       logError(err);
     }
-  }, [setVal]);
+  }, [setVal, storageKey, stringify]);
   return [val, saveVal];
 }
 

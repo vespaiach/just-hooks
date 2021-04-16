@@ -104,7 +104,7 @@
       } catch (err) {
         logError(err);
       }
-    }, [setVal]);
+    }, [setVal, storageKey, stringify]);
     return [val, saveVal];
   }
 

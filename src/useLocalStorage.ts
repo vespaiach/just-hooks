@@ -38,7 +38,7 @@ export default function useLocalStorage<T>(
         logError(err);
       }
     },
-    [setVal]
+    [setVal, storageKey, stringify]
   );
 
   return [val, saveVal];
