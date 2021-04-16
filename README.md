@@ -13,7 +13,7 @@ A collection of useful React Hooks and utility functions help to speed up web de
 npm install just-hooks --save
 yarn add just-hooks -S
 
-import { useTransferList, safeFetch } from 'just-hooks';
+import { useTransferList, safeFetch, useLocalStoragej } from 'just-hooks';
 ```
 
 # List of just-hooks
@@ -40,6 +40,7 @@ const {
 ## Wrap Fetch Function
 
 A utility function help to combine fetch's two-stage calls into one call and make sure all exceptions are catched. Response of this function will give either `data` or `error`:
+
 ```
 import { useTransferList, safeFetch } from 'just-hooks';
 const response = await safeFetch('url/api');
@@ -69,8 +70,33 @@ if (!response.ok) {
    *   - `code`: Http status, some unexpected error will give `unknown` code
    *   - `data`: error data that server has returned
    */
-  response.error  
+  response.error
 }
+```
+
+### Use Local Storage
+
+A React Hook helps to synchronize state to local storage.
+
+```
+const [value, setValue] = useLocalStorage(stringKeyOrFunction, initialValue, options)
+```
+
+Parameters:
+
+- `stringKeyOrFunction`: storage key. It can be either a string or a function that return a string
+- `initialValue`: start value
+- `options`: is optional. It is an object with two possible functions:
+  - `parse(string) => value`: by default, it is `JSON.parse`
+  - `stringify(value) => string`: by default, it is `JSON.stringify`
+
+Example:
+
+```
+const [loaded, setLoaded] = useLocalStorage<boolean>(()=> 'KEY', true, {
+  parse: (str) => str === '1',
+  stringify: (val) => val ? '1' : '0',
+})
 ```
 
 # Support Browsers List

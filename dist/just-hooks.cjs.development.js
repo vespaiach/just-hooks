@@ -60,6 +60,54 @@ function useTransferList(initialStartList, initialEndList) {
   };
 }
 
+/**
+ * Keep silent on production. Shout out on other environments.
+ */
+function logError(...args) {
+  if (process && process.env && "development" !== 'production') {
+    console.error(...args);
+  }
+}
+
+/**
+ * Save and retrieve value from local storage
+ * @param keyOrFn {string | function} local storage key
+ * @param initialValue {T} initial value
+ * @param options {Object} provide two optional functions for parsing string to object and stringify object to string.
+ */
+
+function useLocalStorage(keyOrFn, initialValue, options) {
+  const {
+    parse = JSON.parse,
+    stringify = JSON.stringify
+  } = options || {};
+  const storageKey = typeof keyOrFn === 'function' ? keyOrFn() : keyOrFn;
+  const [val, setVal] = react.useState(() => {
+    try {
+      const storedVal = localStorage.getItem(storageKey);
+
+      if (storedVal !== null && storedVal !== undefined) {
+        return parse(storedVal);
+      } else {
+        localStorage.setItem(storageKey, stringify(initialValue));
+      }
+    } catch (err) {
+      logError(err);
+    }
+
+    return initialValue;
+  });
+  const saveVal = react.useCallback(val => {
+    try {
+      setVal(val);
+      localStorage.setItem(storageKey, stringify(val));
+    } catch (err) {
+      logError(err);
+    }
+  }, [setVal]);
+  return [val, saveVal];
+}
+
 class APIError extends Error {
   constructor(message, code, data) {
     super(message);
@@ -134,5 +182,6 @@ async function safeFetch(input, init) {
 
 exports.APIError = APIError;
 exports.safeFetch = safeFetch;
+exports.useLocalStorage = useLocalStorage;
 exports.useTransferList = useTransferList;
 //# sourceMappingURL=just-hooks.cjs.development.js.map

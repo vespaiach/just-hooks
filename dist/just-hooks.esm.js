@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const equalityCompare = (item, addOrRemoveItem) => {
   const typeofItem = typeof item;
@@ -54,6 +54,54 @@ function useTransferList(initialStartList, initialEndList) {
     transfer,
     withdraw
   };
+}
+
+/**
+ * Keep silent on production. Shout out on other environments.
+ */
+function logError(...args) {
+  if (process && process.env && process.env.NODE_ENV !== 'production') {
+    console.error(...args);
+  }
+}
+
+/**
+ * Save and retrieve value from local storage
+ * @param keyOrFn {string | function} local storage key
+ * @param initialValue {T} initial value
+ * @param options {Object} provide two optional functions for parsing string to object and stringify object to string.
+ */
+
+function useLocalStorage(keyOrFn, initialValue, options) {
+  const {
+    parse = JSON.parse,
+    stringify = JSON.stringify
+  } = options || {};
+  const storageKey = typeof keyOrFn === 'function' ? keyOrFn() : keyOrFn;
+  const [val, setVal] = useState(() => {
+    try {
+      const storedVal = localStorage.getItem(storageKey);
+
+      if (storedVal !== null && storedVal !== undefined) {
+        return parse(storedVal);
+      } else {
+        localStorage.setItem(storageKey, stringify(initialValue));
+      }
+    } catch (err) {
+      logError(err);
+    }
+
+    return initialValue;
+  });
+  const saveVal = useCallback(val => {
+    try {
+      setVal(val);
+      localStorage.setItem(storageKey, stringify(val));
+    } catch (err) {
+      logError(err);
+    }
+  }, [setVal]);
+  return [val, saveVal];
 }
 
 class APIError extends Error {
@@ -128,5 +176,5 @@ async function safeFetch(input, init) {
   }
 }
 
-export { APIError, safeFetch, useTransferList };
+export { APIError, safeFetch, useLocalStorage, useTransferList };
 //# sourceMappingURL=just-hooks.esm.js.map
