@@ -13,6 +13,7 @@ export class APIError<T> extends Error {
     return `[${this.code}] ${this.message}`;
   }
 }
+
 const getResponseType = (contentType: string) => {
   if (
     contentType.indexOf('application/json') > -1 ||

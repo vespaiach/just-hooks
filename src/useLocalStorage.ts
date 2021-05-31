@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import { logError } from './utils';
 
 /**
  * Save and retrieve value from local storage
@@ -24,7 +23,9 @@ export default function useLocalStorage<T>(
         localStorage.setItem(storageKey, stringify(initialValue));
       }
     } catch (err) {
-      logError(err);
+      if (__DEV__) {
+        console.error(err);
+      }
     }
     return initialValue;
   });
@@ -35,7 +36,9 @@ export default function useLocalStorage<T>(
         setVal(val);
         localStorage.setItem(storageKey, stringify(val));
       } catch (err) {
-        logError(err);
+        if (__DEV__) {
+          console.error(err);
+        }
       }
     },
     [setVal, storageKey, stringify]

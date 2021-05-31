@@ -26,8 +26,9 @@
     <button onclick="call_text()" data-testid="text">
       Text
     </button>
-    <script type="text/javascript">
-      const justhooks = window['just-hooks'];
+    <script type="text/javascript" type="module">
+      import justhooks from '../dist/just-hooks.esm.js';
+
       var call_ok = async () =>
         await justhooks.safeFetch('http://localhost:8081/ok');
       var call_400 = async () =>
