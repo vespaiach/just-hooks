@@ -1,95 +1,44 @@
 {
-  "version": "0.4.0",
-  "keywords": [
-    "react",
-    "hooks",
-    "utilities"
-  ],
-  "license": "Unlicense",
-  "description": "Collection of useful React Hooks",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "engines": {
-    "node": ">=10"
-  },
-  "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build --format cjs,esm,umd",
-    "publish": "npm publish",
-    "test": "tsdx test --passWithNoTests --runInBand",
-    "lint": "tsdx lint src",
-    "prepare": "tsdx build",
-    "size": "size-limit",
-    "analyze": "size-limit --why",
-    "server:api": "nodemon spec/server.js",
-    "server:html": "http-server -p 8080"
-  },
-  "peerDependencies": {
-    "react": ">=16.8"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/vespaiach/just-hooks"
-  },
-  "bugs": {
-    "url": "https://github.com/vespaiach/just-hooks/issues"
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
-  "name": "just-hooks",
-  "author": "vespaiach; nta.toan@gmail.com",
-  "module": "dist/just-hooks.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/just-hooks.cjs.production.min.js",
-      "limit": "10 KB"
+    "version": "0.4.0",
+    "keywords": [
+        "react",
+        "hooks",
+        "utilities"
+    ],
+    "license": "Unlicense",
+    "description": "Collection of useful React Hooks",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "src"
+    ],
+    "peerDependencies": {
+        "react": ">=16.8"
     },
-    {
-      "path": "dist/just-hooks.esm.js",
-      "limit": "10 KB"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vespaiach/react-utils"
+    },
+    "bugs": {
+        "url": "https://github.com/vespaiach/react-utils/issues"
+    },
+    "name": "react-utils",
+    "author": "Trinh Nguyen",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+        "@types/react": "^18.0.14",
+        "@types/react-dom": "^18.0.5",
+        "@vitejs/plugin-react": "^1.3.2",
+        "typescript": "^4.6.4",
+        "vite": "^2.9.13"
     }
-  ],
-  "devDependencies": {
-    "@koa/router": "^10.0.0",
-    "@size-limit/preset-small-lib": "^4.10.1",
-    "@testing-library/react-hooks": "^5.1.0",
-    "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.2",
-    "@typescript-eslint/parser": "^4.22.0",
-    "http-server": "^0.12.3",
-    "husky": "^5.1.3",
-    "jest-puppeteer": "^4.4.0",
-    "koa": "^2.13.1",
-    "koa-bodyparser": "^4.3.0",
-    "koa-cors": "^0.0.16",
-    "koa-route": "^3.2.0",
-    "koa-static": "^5.0.0",
-    "nodemon": "^2.0.7",
-    "npm-run-all": "^4.1.5",
-    "puppeteer": "^8.0.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "size-limit": "^4.10.1",
-    "ts-jest": "^26.5.4",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.1.0",
-    "typescript": "^4.2.4"
-  },
-  "browserslist": [
-    "defaults",
-    "not IE 11"
-  ]
 }
