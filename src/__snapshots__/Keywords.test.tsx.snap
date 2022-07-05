@@ -1,0 +1,68 @@
+// Vitest Snapshot v1
+
+exports[`Keyword List component snapshot 1`] = `
+<p
+  className="keyword-list"
+  itemProp="keywords"
+  itemScope={true}
+  itemType="https://schema.org/DefinedTerm"
+  style={
+    {
+      "fontWeight": "bold",
+    }
+  }
+>
+  <a
+    href="https://reactjs.org/"
+    itemProp="url"
+    title="react"
+  >
+    <span
+      itemProp="name"
+    >
+      react
+    </span>
+    <span>
+      111
+    </span>
+  </a>
+  <a
+    href="https://vuejs.org/"
+    itemProp="url"
+    title="vue"
+  >
+    <span
+      itemProp="name"
+    >
+      vue
+    </span>
+    <span>
+      111
+    </span>
+  </a>
+  <span>
+    (111 items)
+  </span>
+</p>
+`;
+
+exports[`Keyword component snapshot 1`] = `
+<a
+  className="keyword"
+  itemProp="url"
+  style={
+    {
+      "fontWeight": "bold",
+    }
+  }
+>
+  <span
+    itemProp="name"
+  >
+    react
+  </span>
+  <span>
+    (111)
+  </span>
+</a>
+`;

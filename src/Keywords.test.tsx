@@ -1,76 +1,49 @@
 import React from 'react';
-import { CommonProps, PolymorphicComponentProps } from './type';
+import { beforeEach, afterEach, test, expect, vi } from 'vitest';
+import { create, ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
+import { unmountComponentAtNode } from 'react-dom';
+import KeywordList, { Keyword } from './Keywords';
 
-export interface KeywordData {
-    name: string;
-    url?: string;
-    extra?: React.ReactNode;
-}
+let container: HTMLDivElement | null = null;
+beforeEach(async () => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+});
 
-interface KeywordsProps<K extends KeywordData = KeywordData> extends CommonProps {
-    keywords: K[];
-    onKeyworkClick?: React.MouseEventHandler<HTMLAnchorElement>;
-}
-
-interface KeywordProps extends CommonProps {
-    name: string;
-    url?: string;
-    onClick?: React.MouseEventHandler<HTMLAnchorElement>;
-}
-
-export function Keyword({ name, url, children, ...rest }: KeywordProps) {
-    if (url) {
-        return (
-            <a itemProp="url" {...rest}>
-                <span itemProp="name">{name}</span>
-                {children}
-            </a>
-        );
+afterEach(() => {
+    if (container) {
+        unmountComponentAtNode(container);
+        container.remove();
+        container = null;
     }
-    return (
-        <>
-            <span itemProp="name" {...rest}>
-                {name}
-            </span>
-            {children}
-        </>
-    );
-}
+});
 
-export default function KeywordList<A extends React.ElementType, K extends KeywordData = KeywordData>({
-    as,
-    keywords,
-    onKeyworkClick,
-    children,
-    ...rest
-}: PolymorphicComponentProps<A, KeywordsProps<K>>) {
-    const Component = as || 'div';
-    return (
-        <Component itemScope itemProp="keywords" itemType="https://schema.org/DefinedTerm" {...rest}>
-            {keywords.map((k, i) => {
-                if (k.url) {
-                    return (
-                        <a
-                            key={`${k.name}${i}`}
-                            itemProp="url"
-                            title={k.name}
-                            href={k.url}
-                            onClick={onKeyworkClick}
-                        >
-                            <span itemProp="name">{k.name}</span>
-                            {k.extra}
-                        </a>
-                    );
-                } else {
-                    return (
-                        <React.Fragment key={`${k.name}${i}`}>
-                            <span itemProp="name">{k.name}</span>
-                            {k.extra}
-                        </React.Fragment>
-                    );
-                }
-            })}
-            {children}
-        </Component>
+test('Keyword component snapshot', () => {
+    const component = create(
+        <Keyword name="react" url="https://reactjs.org/" className="keyword" style={{ fontWeight: 'bold' }}>
+            <span>(111)</span>
+        </Keyword>,
     );
+    const tree = toJson(component);
+    expect(tree).toMatchSnapshot();
+});
+
+test('Keyword List component snapshot', () => {
+    const keywords = [
+        { name: 'react', url: 'https://reactjs.org/', extra: <span>111</span> },
+        { name: 'vue', url: 'https://vuejs.org/', extra: <span>111</span> },
+    ];
+    const component = create(
+        <KeywordList className="keyword-list" style={{ fontWeight: 'bold' }} keywords={keywords} as="p">
+            <span>(111 items)</span>
+        </KeywordList>,
+    );
+    const tree = toJson(component);
+    expect(tree).toMatchSnapshot();
+});
+
+function toJson(component: ReactTestRenderer) {
+    const result = component.toJSON();
+    expect(result).toBeDefined();
+    return result as ReactTestRendererJSON;
 }
