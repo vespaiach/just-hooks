@@ -2,7 +2,7 @@ import React from 'react';
 import { beforeEach, afterEach, test, expect, vi } from 'vitest';
 import { create, ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 import { unmountComponentAtNode } from 'react-dom';
-import KeywordList, { Keyword } from './Keywords';
+import { KeywordList, Keyword } from './Keywords';
 
 let container: HTMLDivElement | null = null;
 beforeEach(async () => {

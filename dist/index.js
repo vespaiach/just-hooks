@@ -1,8 +1,1 @@
-
-'use strict'
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./just-hooks.cjs.production.min.js')
-} else {
-  module.exports = require('./just-hooks.cjs.development.js')
-}
+function e(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var r=/*#__PURE__*/e(require("react"));function t(){return t=Object.assign?Object.assign.bind():function(e){for(var r=1;r<arguments.length;r++){var t=arguments[r];for(var n in t)Object.prototype.hasOwnProperty.call(t,n)&&(e[n]=t[n])}return e},t.apply(this,arguments)}function n(e,r){if(null==e)return{};var t,n,a={},l=Object.keys(e);for(n=0;n<l.length;n++)r.indexOf(t=l[n])>=0||(a[t]=e[t]);return a}var a=["name","url","children"],l=["as","keywords","onKeyworkClick","children"];function i(e){var l=e.name,i=e.url,o=e.children,u=n(e,a);return i?r.default.createElement("a",t({itemProp:"url"},u),r.default.createElement("span",{itemProp:"name"},l),o):r.default.createElement(r.default.Fragment,null,r.default.createElement("span",t({itemProp:"name"},u),l),o)}exports.Keyword=i,exports.KeywordList=function(e){var a=e.as,o=e.keywords,u=e.onKeyworkClick,c=e.children,m=n(e,l);return r.default.createElement(a||"div",t({itemScope:!0,itemProp:"keywords",itemType:"https://schema.org/DefinedTerm"},m),o.map(function(e,t){return r.default.createElement(i,{key:""+e.name+t,name:e.name,className:e.className,style:e.style,url:e.url,onClick:function(r){null==u||u(e,r)}},e.children)}),c)};

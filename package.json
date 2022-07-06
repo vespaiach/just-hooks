@@ -7,14 +7,26 @@
     ],
     "license": "Unlicense",
     "description": "Collection of useful React Hooks",
-    "main": "dist/index.js",
     "typings": "dist/index.d.ts",
+    "source": "src/index.tsx",
+    "main": "dist/index.js",
+    "module": "dist/index.esm.js",
+    "umd:main": "dist/index.umd.js",
+    "unpkg": "dist/index.umd.js",
+    "exports": {
+        ".": "./dist/index.js",
+        "./Keywords": "./dist/Keywords.js",
+        "./Keywords.js": "./dist/Keywords.js"
+    },
+    "engines": {
+        "node": ">=12.7.0"
+    },
     "files": [
         "dist",
         "src"
     ],
     "peerDependencies": {
-        "react": ">=16.8"
+        "react": ">=17.0.0"
     },
     "repository": {
         "type": "git",
@@ -26,17 +38,16 @@
     "name": "react-utils",
     "author": "Trinh Nguyen",
     "scripts": {
+        "clean": "rimraf dist",
         "dev": "vite",
-        "build": "tsc && vite build",
+        "build": "npm run clean && microbundle --jsx React.createElement -i src/index.tsx -i src/Keywords.tsx --sourcemap false",
         "preview": "vite preview",
         "test": "vitest",
         "test:watch": "vitest run"
     },
-    "dependencies": {
-        "react": ">=16.8",
-        "react-dom": "^18.2.0"
-    },
     "devDependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "@types/react": "^18.0.14",
         "@types/react-dom": "^18.0.5",
         "@types/react-test-renderer": "^18.0.0",

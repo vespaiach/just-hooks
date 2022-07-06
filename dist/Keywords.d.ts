@@ -1,10 +1,21 @@
-/// <reference types="react" />
-interface Keyword {
+import React from 'react';
+import { CommonProps, PolymorphicComponentProps } from './type';
+export interface KeywordData {
     name: string;
-}
-interface KeywordsProps<T extends Keyword> {
+    url?: string;
     className?: string;
-    keywords: T[];
+    style?: React.CSSProperties;
+    children?: React.ReactNode;
 }
-export default function TagList<K extends Keyword>({ keywords, className, }: KeywordsProps<K>): JSX.Element;
+interface KeywordsProps<K extends KeywordData = KeywordData> extends CommonProps {
+    keywords: K[];
+    onKeyworkClick?: (tag: K, evt: React.MouseEvent<HTMLAnchorElement>) => void;
+}
+interface KeywordProps extends CommonProps {
+    name: string;
+    url?: string;
+    onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+}
+export declare function Keyword({ name, url, children, ...rest }: KeywordProps): JSX.Element;
+export declare function KeywordList<A extends React.ElementType, K extends KeywordData = KeywordData>({ as, keywords, onKeyworkClick, children, ...rest }: PolymorphicComponentProps<A, KeywordsProps<K>>): JSX.Element;
 export {};
